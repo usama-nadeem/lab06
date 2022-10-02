@@ -1,4 +1,4 @@
-brute_force_knapsack<-function(x,W)
+brute_force_knapsack<-function(x,W, parallel=FALSE)
 {    
   #stop if W is not integer or it is not greater than 0
   if (W <= 0 || !(is.numeric(W)))
@@ -14,48 +14,89 @@ brute_force_knapsack<-function(x,W)
   {
     stop("x does not contain w and/or v coloumns")
   }
-  CurrentMax<-0
+  
   value<-0
+  CurrentMax<-0
   NumOfElements<-dim(x)[1]
   elements<-length(n)
-  
-  lapply(1:NumOfElements, function(i)
+  final_list = list()
+  if (!parallel)
   {
-    PossibleCombinations <-combn(NumOfElements,i)
-    j<-1
-    while(j <= ncol(PossibleCombinations))
+    lapply(1:NumOfElements, function(i)
     {
-      #check some of weights of all PossibleCombinationsinations to be less than upper limit
-      if(sum(x$w[PossibleCombinations[,j]]) <= W)
+      PossibleCombinations <-combn(NumOfElements,i)
+      itr<-1
+      while(itr <= ncol(PossibleCombinations))
       {
-        value<-sum(x$v[PossibleCombinations[,j]])
-        
-        if(value > CurrentMax)
+        #check some of weights of all PossibleCombinations to be less than upper limit
+        if(sum(x$w[PossibleCombinations[,itr]]) <= W)
         {
-          #if the value of the current PossibleCombinationsination is more than the previous max value, we will store it as new max 
-          #since it is the new max value in knapsack, so we will store elements that made this value 
-          CurrentMax <<- value
-          elements <<- PossibleCombinations[,j]
+          value<-sum(x$v[PossibleCombinations[,itr]])
+          if(value > CurrentMax)
+          {
+            #if the value of the current PossibleCombinations is more than the previous max value, we will store it as new max 
+            #since it is the new max value in knapsack, so we will store elements that made this value 
+            CurrentMax <<- value
+            elements <<- PossibleCombinations[,itr]
+          }
+          
         }
-        
+        itr<-itr+1
+      }
+    })
+  
+    final_list<-list(value=round(CurrentMax),elements=elements)
+  }
+  
+  else if (parallel)
+  {
+    nodes <- parallel::makeCluster(parallel::detectCores()/2)
+    #exporting variables
+    parallel::clusterExport(nodes, varlist=c("x","W","n","elements","CurrentMax","value"), envir=environment())
+    parallel::clusterEvalQ(nodes, library(utils))
+    Value <- parallel::parLapply(nodes, 1:NumOfElements, function(i, x, W) {
+      
+      PossibleCombinations <- utils::combn(NumOfElements,i)
+      
+      itr <- 1
+      while(itr<=ncol(PossibleCombinations))
+      { 
+        if(sum(x$w[PossibleCombinations[,itr]]) <= W)
+        {
+          value<-sum(x$v[PossibleCombinations[,itr]])
+          if(CurrentMax<value)
+          {
+            elements<-PossibleCombinations[,itr]
+            CurrentMax<-value
+          }
+        }
+        itr <- itr+1
       }
       
-      j<-j+1
+      return(list(value=round(CurrentMax),elements=elements))
+      
+    }, x, W )
+    
+    i=1
+    while(Value[[i]]["value"]!=0)
+    {
+      elements<-Value[[i]]["elements"]
+      value<-Value[[i]]["value"]
+      i<-i+1
     }
-  })
+    final_list= c(value,elements)
+    parallel::stopCluster(nodes) 
+  }
   
-  values<-list(value=round(CurrentMax),elements=elements)
-  return(values)
+  return (final_list)
 }
 
-#random seed is not consistent on different R versions, so use RNGkind
-# RNGkind(sample.kind = "Rounding")
-# set.seed(42, kind = "Mersenne-Twister", normal.kind = "Inversion")
-# n <- 2000
-# knapsack_objects <-
-#   data.frame(
-#     w=sample(1:4000, size = n, replace = TRUE),
-#     v=runif(n = n, 0, 10000)
-#   )
-# 
-# brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500)
+# WithoutParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=FALSE))
+# ParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE))
+# print ("Without Parallelisation: ")
+# print (unname(WithoutParallelTime[1]))
+# print ("ParallelTime: ")
+# print (unname((ParallelTime[1])))
+# Diff= ((WithoutParallelTime[1])-ParallelTime[1])
+# print ("Percentage Improvement due to parallelisation: ")
+# print (unname(Diff))
