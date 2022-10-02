@@ -50,13 +50,14 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
   
   else if (parallel)
   {
+    # default type is PSOCK
     nodes <- parallel::makeCluster(parallel::detectCores()/2)
     #exporting variables
     parallel::clusterExport(nodes, varlist=c("x","W","n","elements","CurrentMax","value"), envir=environment())
     parallel::clusterEvalQ(nodes, library(utils))
     Value <- parallel::parLapply(nodes, 1:NumOfElements, function(i, x, W) {
       
-      PossibleCombinations <- utils::combn(NumOfElements,i)
+    PossibleCombinations <- utils::combn(NumOfElements,i)
       
       itr <- 1
       while(itr<=ncol(PossibleCombinations))
@@ -73,7 +74,7 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
         itr <- itr+1
       }
       
-      return(list(value=round(CurrentMax),elements=elements))
+      return(list(value=round(CurrentMax), elements=elements))
       
     }, x, W )
     
@@ -90,6 +91,8 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
   
   return (final_list)
 }
+
+brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE)
 
 # WithoutParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=FALSE))
 # ParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE))
