@@ -20,6 +20,7 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
   NumOfElements<-dim(x)[1]
   elements<-length(n)
   final_list = list()
+  
   if (!parallel)
   {
     lapply(1:NumOfElements, function(i)
