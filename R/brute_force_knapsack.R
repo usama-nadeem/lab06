@@ -1,3 +1,16 @@
+#' Knapsack using brute force O(2^n)
+#' @description 
+#' knapsack greedy implementation 
+#' 
+#' @param x dataframe containing v and w
+#' @param W weight threshold  
+#' @return value and objects that made up that value
+#' @examples
+#' brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel=FALSE)
+#' brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE)
+#' @export
+#' 
+
 brute_force_knapsack<-function(x,W, parallel=FALSE)
 {    
   #stop if W is not integer or it is not greater than 0
@@ -54,7 +67,7 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
     # default type is PSOCK
     nodes <- parallel::makeCluster(parallel::detectCores()/2)
     #exporting variables
-    parallel::clusterExport(nodes, varlist=c("x","W","n","elements","CurrentMax","value"), envir=environment())
+    parallel::clusterExport(nodes, varlist=c("x","W","n","value","CurrentMax","elements"), envir=environment())
     parallel::clusterEvalQ(nodes, library(utils))
     Value <- parallel::parLapply(nodes, 1:NumOfElements, function(i, x, W) {
       
@@ -79,12 +92,12 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
       
     }, x, W )
     
-    i=1
-    while(Value[[i]]["value"]!=0)
+    itr1=1
+    while(Value[[itr1]]["value"]!=0)
     {
-      elements<-Value[[i]]["elements"]
-      value<-Value[[i]]["value"]
-      i<-i+1
+      elements<-Value[[itr1]]["elements"]
+      value<-Value[[itr1]]["value"]
+      itr1<-itr1+1
     }
     final_list= c(value,elements)
     parallel::stopCluster(nodes) 
@@ -93,7 +106,7 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
   return (final_list)
 }
 
-brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE)
+# brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE)
 
 # WithoutParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=FALSE))
 # ParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE))
