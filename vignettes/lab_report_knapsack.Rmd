@@ -18,4 +18,41 @@ knitr::opts_chunk$set(
 library(lab06)
 ```
 
-### Brute Force Vignette
+## Brute Force Implementation
+
+Implementation of Knapsack algo using brute force brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel=FALSE)
+
+    brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel=FALSE)
+
+### Time Taken:
+
+Using (parallel= FALSE): 0.016
+
+Using (parallel= TRUE): 0.008
+
+Command used:
+
+    system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=FALSE))
+
+Tested on Linux, using 8/2 = 4 cores. Machine had 8 cores in total.
+
+### How much time does it takes to run the algorithm for n = 16 objects?
+
+Using (parallel= FALSE): 0.268
+
+Using (parallel= TRUE): 0.019
+
+### What performance gain could you get by parallelizing brute force search?
+
+Almost 2x increase in speed: (0.016/0.08 = 2), for n=12
+
+## Greedy Heuristic Implementation
+
+### How much time does it takes to run the algorithm for n = 1000000 objects?
+
+Time Taken: 0.783 s
+
+
+## Dynamic Implementation
+
+### How much time does it takes to run the algorithm for n = 500 objects?

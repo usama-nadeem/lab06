@@ -107,9 +107,9 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
 }
 
 # brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE)
-
-# WithoutParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=FALSE))
-# ParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE))
+# 
+# WithoutParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:16,], W = 3500, parallel=FALSE))
+# ParallelTime = system.time (brute_force_knapsack(x = knapsack_objects[1:16,], W = 3500, parallel=TRUE))
 # print ("Without Parallelisation: ")
 # print (unname(WithoutParallelTime[1]))
 # print ("ParallelTime: ")
