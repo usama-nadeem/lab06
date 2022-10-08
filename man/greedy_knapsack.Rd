@@ -15,8 +15,10 @@ greedy_knapsack(x, W)
 value and objects that made up that value
 }
 \description{
-knapsack greedy implementation
+implementation of knapsack greedy algorithm
 }
 \examples{
+n<-10000
+knapsack_objects <-data.frame(w=sample(1:4000, size = n, replace = TRUE),v=runif(n = n, 0, 10000))
 greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
 }
