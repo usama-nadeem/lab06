@@ -8,7 +8,7 @@ Authors@R:
     person("Muhammad", "Umair", , "Umair.raja.1422@gmail.com", role = c("aut")))
 Maintainer: Usama Naderm <usamanadeem321@gmail.com>
 Description: Implementation of lab06 for knapsack
-License: na
+License: GPL-3
 Suggests: 
     knitr,
     rmarkdown,
