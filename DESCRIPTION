@@ -1,12 +1,14 @@
 Package: lab06
 Type: Package
-Title: What the package does (short line)
+Title: Implements knapsack in deifferent ways
 Version: 1.0
 Date: 2022-10-02
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: 
+    c(person("Usama", "Nadeem", , "usamanadeem321@gmail.com", role = c("aut", "cre")), 
+    person("Muhammad", "Umair", , "Umair.raja.1422@gmail.com", role = c("aut")))
+Maintainer: Usama Naderm <usamanadeem321@gmail.com>
+Description: Implementation of lab06 for knapsack
+License: na
 Suggests: 
     knitr,
     rmarkdown,
