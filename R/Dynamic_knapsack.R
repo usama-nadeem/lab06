@@ -27,9 +27,12 @@ knapsack_dynamic<-function(x,W){
   {
     stop("x does not contain w and/or v coloumns")
   }
- 
-  if(!(W>=0 && length(W)==1 && is.numeric(W))){
-    stop("W must be one positive numeric value")
+ if(W<0 || is.numeric(W)==FALSE)
+ {
+   stop("W must be a positive numeric value")
+ }
+  if(length(W)!=1){
+    stop("W must be a single value")
   }
   
   n<-nrow(x)
@@ -57,22 +60,22 @@ r<-n+1
    
   j=j+1  
   i<-which.max(mat[,j])
-  elements<-length(n)
+  total<-length(n)
   k<-1
-  elements[k]<-i-1
+  total[k]<-i-1
   
   while(mat[i,j]!=0 && j!=1 && i!=0){
     k<-k+1
     j<-(j-weight[i-1])
     i<-which(mat[,j] == mat[i-1,j])[1]
-    elements[k]<-i-1
+    total[k]<-i-1
   }
   
   value<-round(mat[n+1,W+1])
-  t<-elements[which(elements>0)]
-  elements<-sort(t)
+  t<-total[which(total>0)]
+  total<-sort(t)
   
-  values<-list(value=value,elements=elements)  
+  values<-list(value=value,total=total)  
   return(values)
 }
  #set.seed(42)
