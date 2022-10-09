@@ -17,12 +17,20 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(lab06)
 ```
+**knapsack_dynamic()**
+this function takes two parameters as input and implements knapsack algorithm using dynamic programming
 
+**brute_force_knapsack()**
+this function takes three parameters as input and implements knapsack algorithm using brute force programming
+**greedy_knapsack ()**
+this function takes two parameters as input and implements knapsack algorithm using greedy technique
 ## Brute Force Implementation
 
 Implementation of Knapsack algo using brute force brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel=FALSE)
-
-    brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel=FALSE)
+  n<-2000
+ knapsack_objects <- data.frame(
+ w=sample(1:4000, size = n, replace = TRUE),v=runif(n = n, 0, 10000))
+ brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel=FALSE)
 
 ### Time Taken:
 
@@ -32,7 +40,7 @@ Using (parallel= TRUE): 0.008
 
 Command used:
 
-    system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=FALSE))
+system.time (brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=FALSE))
 
 Tested on Linux, using 8/2 = 4 cores. Machine had 8 cores in total.
 
@@ -62,7 +70,7 @@ Time difference of 0.208606 secs
 
 
 ## Dynamic Implementation
-Implementation of knapsack algorithm using Dynamic programming 
+Implementation of knapsack algorithm using Dynamic programming     
 
 ### How much time does it takes to run the algorithm for n = 500 objects?
 Time difference of 0.139641 secs

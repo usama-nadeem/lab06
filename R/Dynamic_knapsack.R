@@ -14,7 +14,7 @@
 
 knapsack_dynamic<-function(x,W){
   
-  if(class(x)!="data.frame"){
+  if(is.data.frame(x)==FALSE){
     stop("x is not a dataframe")
   }
   if(any(x<0,na.rm=TRUE)){
@@ -78,10 +78,11 @@ r<-n+1
   values<-list(value=value,total=total)  
   return(values)
 }
- #set.seed(42)
- #n <- 500
+ set.seed(42)
+ n <- 2000
  #start_time <- Sys.time()
  #knapsack_objects <-data.frame(w=sample(1:4000, size = n, replace = TRUE),v=runif(n = n, 0, 10000))
- #knapsack_dynamic(x = knapsack_objects[1:8,],W=3500)
+# knapsack_dynamic(x = knapsack_objects[1:1200,],W=3500)
+ #st <- system.time(gk <- knapsack_dynamic(x = knapsack_objects[1:16,], W = 2000))
  #end_time <- Sys.time()
  #print(end_time - start_time)

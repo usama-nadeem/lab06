@@ -19,7 +19,7 @@ greedy_knapsack<-function(x,W)
     stop("Weight W must be positive number")
   }
   
-  else if (class(x)!="data.frame")
+  else if (is.data.frame(x)==FALSE)
   {
     stop("x is not a dataframe")
   }

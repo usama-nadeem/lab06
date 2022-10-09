@@ -2,9 +2,13 @@
 #' @description 
 #' knapsack greedy implementation 
 #' @param x dataframe containing v and w
-#' @param W weight threshold  
+#' @param W weight threshold 
+#' @param parallel boolean
 #' @return value and objects that made up that value
 #' @examples
+#' n<-2000
+#' knapsack_objects <- data.frame(
+#' w=sample(1:4000, size = n, replace = TRUE),v=runif(n = n, 0, 10000))
 #' brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel=FALSE)
 #' brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE)
 #' @export
@@ -30,7 +34,7 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
   value<-0
   CurrentMax<-0
   NumOfElements<-dim(x)[1]
-  elements<-length(n)
+  elements<-c()
   final_list = list()
   
   if (!parallel)

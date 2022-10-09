@@ -10,6 +10,8 @@ brute_force_knapsack(x, W, parallel = FALSE)
 \item{x}{dataframe containing v and w}
 
 \item{W}{weight threshold}
+
+\item{parallel}{boolean}
 }
 \value{
 value and objects that made up that value
@@ -18,6 +20,9 @@ value and objects that made up that value
 knapsack greedy implementation
 }
 \examples{
+n<-2000
+knapsack_objects <- data.frame(
+w=sample(1:4000, size = n, replace = TRUE),v=runif(n = n, 0, 10000))
 brute_force_knapsack(x = knapsack_objects[1:8,], W = 3500, parallel=FALSE)
 brute_force_knapsack(x = knapsack_objects[1:12,], W = 3500, parallel=TRUE)
 }
