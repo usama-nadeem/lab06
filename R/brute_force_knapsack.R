@@ -1,7 +1,6 @@
 #' Knapsack using brute force O(2^n)
 #' @description 
 #' knapsack greedy implementation 
-#' 
 #' @param x dataframe containing v and w
 #' @param W weight threshold  
 #' @return value and objects that made up that value

@@ -47,12 +47,22 @@ Using (parallel= TRUE): 0.019
 Almost 2x increase in speed: (0.016/0.08 = 2), for n=12
 
 ## Greedy Heuristic Implementation
+Implementation of knapsack algorithm using greedy heuristic 
 
 ### How much time does it takes to run the algorithm for n = 1000000 objects?
+n <- 1000000
+start_time <- Sys.time()
+knapsack_objects <-data.frame(w=sample(1:4000, size = n, replace = TRUE),v=runif(n = n, 0, 10000))
+greedy_knapsack(x = knapsack_objects[1:800,], W = 3500)
+end_time <- Sys.time()
+print(end_time - start_time)
 
-Time Taken: 0.783 s
+Time difference of 0.208606 secs
+
 
 
 ## Dynamic Implementation
+Implementation of knapsack algorithm using Dynamic programming 
 
 ### How much time does it takes to run the algorithm for n = 500 objects?
+Time difference of 0.139641 secs
