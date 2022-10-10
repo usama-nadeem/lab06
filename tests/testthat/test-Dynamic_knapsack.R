@@ -6,18 +6,18 @@ knapsack_objects <- data.frame(
   v=runif(n = n, 0, 10000)
 )
 
-test_that("Correct object is returned", {
+testthat::test_that("Correct object is returned", {
   expect_silent(dk <- knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500))
   expect_named(dk, c("value", "total"))
 })
 
 
-test_that("functions rejects errounous input.", {
+testthat::test_that("functions rejects errounous input.", {
   expect_error(knapsack_dynamic("hej", 3500))
   expect_error(knapsack_dynamic(x = knapsack_objects[1:8,], W = -3500))
 })
 
-test_that("Function return correct results.", {
+testthat::test_that("Function return correct results.", {
   dk <- knapsack_dynamic(x = knapsack_objects[1:8,], W = 3500)
   expect_equal(round(dk$value), 16770)
   expect_true(all(round(dk$total) %in% c(5, 8)))
