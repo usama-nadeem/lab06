@@ -41,7 +41,7 @@ brute_force_knapsack<-function(x,W, parallel=FALSE)
   {
     lapply(1:NumOfElements, function(i)
     {
-      PossibleCombinations <-combn(NumOfElements,i)
+      PossibleCombinations <-utils::combn(NumOfElements,i)
       itr<-1
       while(itr <= ncol(PossibleCombinations))
       {
