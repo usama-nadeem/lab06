@@ -74,3 +74,25 @@ Implementation of knapsack algorithm using Dynamic programming
 
 ### How much time does it takes to run the algorithm for n = 500 objects?
 Time difference of 0.139641 secs
+
+
+### What performance gain could you get by trying to improving your code?
+
+In bruteforce, we identified the bottlenecks of the code, i.e. lapply finction and using combn inside of it.
+This bottleneck was not resolved since it was already according to our best logic. Other than that there was no bottleneck in our code.
+
+In Dynamic Knapsack, we identified the bottleneck a loop. There was an if condition that was being used in the while loop and was running n times. We replaced the if condition with the branchless coding so that it does not have to waste cpu cycles checking for the if condition, every time. This improved our speed for about 11%.
+
+'''
+mat[i+1,j+1]<-mat[i,j+1]*(weight[i] > j)+(!(weight[i] > j))*(max(mat[i,j+1],mat[i,j+1-weight[i]]+value[i]))
+'''
+
+In greedy, we saw in profiling that the maximum time was taken inside the for loop. But this bottleneck could not be released. 
+
+Commands used in profiling:
+  '''
+  l= lineprof(brute_force_knapsack(x = knapsack_objects[1:500,],W=3500))
+  shine (l)
+  '''
+
+

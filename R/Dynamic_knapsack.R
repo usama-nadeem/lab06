@@ -36,8 +36,8 @@ knapsack_dynamic<-function(x,W){
   }
   
   n<-nrow(x)
-c<-W+1
-r<-n+1
+  c<-W+1
+  r<-n+1
   mat<-matrix(ncol=c,nrow=r)
   mat[1,]<-rep(0,W+1)
   
@@ -46,13 +46,9 @@ r<-n+1
   i<-1
   
   while (i<=n) {
-    for(j in 0:W){
-      if(weight[i] > j){
-        mat[i+1,j+1]<-mat[i,j+1]
-      }else{
-        mat[i+1,j+1]<-max(mat[i,j+1],mat[i,j+1-weight[i]]+value[i])
-      }
-     
+    for(j in 0:W)
+    {
+        mat[i+1,j+1]<-mat[i,j+1]*(weight[i] > j)+(!(weight[i] > j))*(max(mat[i,j+1],mat[i,j+1-weight[i]]+value[i]))
     }
     i<-i+1
   }
